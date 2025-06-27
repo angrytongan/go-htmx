@@ -1,0 +1,18 @@
+version: "2"
+
+linters:
+  default:
+    all
+  disable:
+    - depguard
+    - revive
+    - exhaustruct
+    - varnamelen
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - golines

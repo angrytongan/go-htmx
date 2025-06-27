@@ -1,0 +1,12 @@
+{{block "root-page" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  {{template "root" .}}
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "root" .}}
+  <p>This is root</p>
+{{end}}
