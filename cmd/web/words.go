@@ -2,18 +2,28 @@ package main
 
 import (
 	"fmt"
-	"ghh/internal/words"
 	"net/http"
+
+	"ghh/internal/words"
 )
 
 func (app *Application) wordsSearchRadio(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	if err := r.ParseForm(); err != nil {
+		app.serverError(w, r, fmt.Errorf("r.ParseForm(): %w", err), http.StatusInternalServerError)
+
+		return
+	}
 
 	partial := r.FormValue("q")
 
 	possibles, err := words.Search(partial)
 	if err != nil {
-		app.serverError(w, r, fmt.Errorf("words.Search(%s): %w", partial, err), http.StatusInternalServerError)
+		app.serverError(
+			w,
+			r,
+			fmt.Errorf("words.Search(%s): %w", partial, err),
+			http.StatusInternalServerError,
+		)
 
 		return
 	}
@@ -27,13 +37,22 @@ func (app *Application) wordsSearchRadio(w http.ResponseWriter, r *http.Request)
 }
 
 func (app *Application) wordsSearchCheckbox(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	if err := r.ParseForm(); err != nil {
+		app.serverError(w, r, fmt.Errorf("r.ParseForm(): %w", err), http.StatusInternalServerError)
+
+		return
+	}
 
 	partial := r.FormValue("q")
 
 	possibles, err := words.Search(partial)
 	if err != nil {
-		app.serverError(w, r, fmt.Errorf("words.Search(%s): %w", partial, err), http.StatusInternalServerError)
+		app.serverError(
+			w,
+			r,
+			fmt.Errorf("words.Search(%s): %w", partial, err),
+			http.StatusInternalServerError,
+		)
 
 		return
 	}

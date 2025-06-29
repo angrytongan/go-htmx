@@ -27,6 +27,8 @@ func run() error {
 	mux.Get("/", app.root)
 	mux.Get("/dashboard", app.dashboard)
 	mux.Get("/comboboxes", app.comboboxes)
+	mux.Get("/tabs", app.tabs)
+	mux.Get("/graphs", app.graphs)
 
 	mux.Get("/news/{offset}/{limit}", app.newsPartial)
 	mux.Get("/weather/{offset}/{limit}", app.weatherPartial)

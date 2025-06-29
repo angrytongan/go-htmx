@@ -1,0 +1,17 @@
+{{block "graphs-page" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  {{template "graphs" .}}
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "graphs" .}}
+  <h2>Graphs</h2>
+
+  {{range .Graphs}}
+    {{.Element}}
+    {{.Script}}
+  {{end}}
+{{end}}

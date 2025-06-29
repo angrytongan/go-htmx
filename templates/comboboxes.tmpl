@@ -29,7 +29,11 @@
 
 {{block "word-search-results-radio" .}}
   {{if .Results}}
-    <ul>
+    <ul _="
+           on change from <input[type='radio'][name='{{$.Name}}'] />
+            /* need to finish this bit here */
+            log 'got change event'
+           ">
       {{range .Results}}
         <li><label><input type="radio" name="{{$.Name}}" /> {{.}}</label>
       {{end}}

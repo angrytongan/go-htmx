@@ -54,7 +54,7 @@ func (app *Application) render(w http.ResponseWriter,
 		return
 	}
 
-	w.Header().Set("Content-type", "text/html; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(statusCode)
 
 	_, err = w.Write(b.Bytes())
