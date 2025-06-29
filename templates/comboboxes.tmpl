@@ -1,0 +1,65 @@
+{{block "comboboxes-page" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  {{template "comboboxes" .}}
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "comboboxes" .}}
+  <h2>Comboboxes</h2>
+
+  {{template "word-search-radio" .}}
+  {{template "word-search-checkbox" .}}
+{{end}}
+
+{{block "word-search-radio" .}}
+  <div>
+    <input type="search"
+           placeholder="search with radio"
+           name="q"
+           hx-get="/words/search/radio"
+           hx-trigger="input changed delay:500ms"
+           hx-target="next .results"
+           />
+    <div class="results"></div>
+  </div>
+{{end}}
+
+{{block "word-search-results-radio" .}}
+  {{if .Results}}
+    <ul>
+      {{range .Results}}
+        <li><label><input type="radio" name="{{$.Name}}" /> {{.}}</label>
+      {{end}}
+    </ul>
+  {{else}}
+    <p>No results.</p>
+  {{end}}
+{{end}}
+
+{{block "word-search-checkbox" .}}
+  <div>
+    <input type="search"
+           placeholder="search with checkboxes"
+           name="q"
+           hx-get="/words/search/checkbox"
+           hx-trigger="input changed delay:500ms"
+           hx-target="next .results"
+           />
+    <div class="results"></div>
+  </div>
+{{end}}
+
+{{block "word-search-results-checkbox" .}}
+  {{if .Results}}
+    <ul>
+      {{range .Results}}
+        <li><label><input type="checkbox" name="{{$.Name}}" /> {{.}}</label>
+      {{end}}
+    </ul>
+  {{else}}
+    <p>No results.</p>
+  {{end}}
+{{end}}

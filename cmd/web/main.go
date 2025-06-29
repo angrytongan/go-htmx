@@ -26,8 +26,12 @@ func run() error {
 
 	mux.Get("/", app.root)
 	mux.Get("/dashboard", app.dashboard)
+	mux.Get("/comboboxes", app.comboboxes)
+
 	mux.Get("/news/{offset}/{limit}", app.newsPartial)
 	mux.Get("/weather/{offset}/{limit}", app.weatherPartial)
+	mux.Get("/words/search/radio", app.wordsSearchRadio)
+	mux.Get("/words/search/checkbox", app.wordsSearchCheckbox)
 
 	server := newServer(defaultPort, mux)
 
