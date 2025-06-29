@@ -19,6 +19,7 @@
 {{end}}
 
 {{block "all-graphs" .}}
+  <p>Rendered: {{.Servertime}} (duration {{.RenderingTime}})</p>
   {{range .Graphs}}
     {{.Element}}
     {{.Script}}

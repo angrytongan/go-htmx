@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"math/rand"
 	"net/http"
+	"time"
 
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
@@ -63,7 +64,10 @@ func makeAllGraphs(n int) ([]GraphThing, error) {
 }
 
 func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
 	graphs, err := makeAllGraphs(numGraphs)
+	renderDuration := time.Since(start)
+
 	if err != nil {
 		app.serverError(
 			w,
@@ -76,14 +80,19 @@ func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pageData := map[string]any{
-		"Graphs": graphs,
+		"Graphs":        graphs,
+		"Servertime":    time.Now().String(),
+		"RenderingTime": renderDuration,
 	}
 
 	app.render(w, r, "graphs", pageData, http.StatusOK)
 }
 
 func (app *Application) graphsRefresh(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
 	graphs, err := makeAllGraphs(numGraphs)
+	renderDuration := time.Since(start)
+
 	if err != nil {
 		app.serverError(
 			w,
@@ -96,7 +105,9 @@ func (app *Application) graphsRefresh(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pageData := map[string]any{
-		"Graphs": graphs,
+		"Graphs":        graphs,
+		"Servertime":    time.Now().String(),
+		"RenderingTime": renderDuration,
 	}
 
 	app.render(w, r, "all-graphs", pageData, http.StatusOK)
