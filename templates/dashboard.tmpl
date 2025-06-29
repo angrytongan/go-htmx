@@ -11,28 +11,12 @@
   <h2>Dashboard</h2>
   {{template "news" .News}}
   {{template "weather" .Weather}}
-  {{template "sport" .Sport}}
 {{end}}
 
 {{block "news" .}}
   <div>
     <h3>News</h3>
 
-    {{template "items" .}}
-  </div>
-{{end}}
-
-{{block "weather" .}}
-  <div>
-  </div>
-{{end}}
-
-{{block "sport" .}}
-  <div>
-  </div>
-{{end}}
-
-{{block "items" .}}
     {{range .Items}}
       <li>{{.}}</li>
     {{end}}
@@ -48,4 +32,27 @@
               hx-target="closest div"
               hx-trigger="click">Next</button>
     {{end}}
+  </div>
+{{end}}
+
+{{block "weather" .}}
+  <div>
+    <h3>Weather</h3>
+
+    {{range .Items}}
+      <li>{{.}}</li>
+    {{end}}
+
+    {{if .HasPrev}}
+      <button hx-get="/weather/{{.PrevPage}}/{{.Limit}}"
+              hx-target="closest div"
+              hx-trigger="click">Prev</button>
+    {{end}}
+
+    {{if .HasNext}}
+      <button hx-get="/weather/{{.NextPage}}/{{.Limit}}"
+              hx-target="closest div"
+              hx-trigger="click">Next</button>
+    {{end}}
+  </div>
 {{end}}
