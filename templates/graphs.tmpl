@@ -10,6 +10,15 @@
 {{block "graphs" .}}
   <h2>Graphs</h2>
 
+  <button hx-get="/graphs/refresh"
+          hx-target="next .all-graphs">Refresh</button>
+
+  <div class="all-graphs">
+    {{template "all-graphs" .}}
+  </div>
+{{end}}
+
+{{block "all-graphs" .}}
   {{range .Graphs}}
     {{.Element}}
     {{.Script}}

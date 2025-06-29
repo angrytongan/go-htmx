@@ -25,15 +25,22 @@ func run() error {
 	mux.Handle("/js/*", assetFileServer)
 
 	mux.Get("/", app.root)
-	mux.Get("/dashboard", app.dashboard)
-	mux.Get("/comboboxes", app.comboboxes)
-	mux.Get("/tabs", app.tabs)
-	mux.Get("/graphs", app.graphs)
 
+	// Paginating partials.
+	mux.Get("/dashboard", app.dashboard)
 	mux.Get("/news/{offset}/{limit}", app.newsPartial)
 	mux.Get("/weather/{offset}/{limit}", app.weatherPartial)
+
+	// Basic comboboxes.
+	mux.Get("/comboboxes", app.comboboxes)
 	mux.Get("/words/search/radio", app.wordsSearchRadio)
 	mux.Get("/words/search/checkbox", app.wordsSearchCheckbox)
+
+	// Echarts, and reloading.
+	mux.Get("/graphs", app.graphs)
+	mux.Get("/graphs/refresh", app.graphsRefresh)
+
+	mux.Get("/tabs", app.tabs)
 
 	server := newServer(defaultPort, mux)
 

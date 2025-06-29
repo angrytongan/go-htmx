@@ -11,6 +11,10 @@ import (
 	"github.com/go-echarts/go-echarts/v2/opts"
 )
 
+const (
+	numGraphs = 3
+)
+
 type GraphThing struct {
 	Element template.HTML
 	Script  template.HTML
@@ -25,9 +29,8 @@ func generateBarItems() []opts.BarData {
 	return items
 }
 
-func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
+func makeAllGraphs(n int) ([]GraphThing, error) {
 	graphs := []GraphThing{}
-	n := 3
 
 	for range n {
 		bar := charts.NewBar()
@@ -45,9 +48,7 @@ func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
 			AddSeries("Category B", generateBarItems())
 
 		if err := bar.Render(&b); err != nil {
-			app.serverError(w, r, fmt.Errorf("bar.Render: %w", err), http.StatusInternalServerError)
-
-			return
+			return graphs, fmt.Errorf("bar.Render: %w", err)
 		}
 
 		snippet := bar.RenderSnippet()
@@ -58,9 +59,45 @@ func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
+	return graphs, nil
+}
+
+func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
+	graphs, err := makeAllGraphs(numGraphs)
+	if err != nil {
+		app.serverError(
+			w,
+			r,
+			fmt.Errorf("makeAllGraphs(%d): %w", numGraphs, err),
+			http.StatusInternalServerError,
+		)
+
+		return
+	}
+
 	pageData := map[string]any{
 		"Graphs": graphs,
 	}
 
 	app.render(w, r, "graphs", pageData, http.StatusOK)
+}
+
+func (app *Application) graphsRefresh(w http.ResponseWriter, r *http.Request) {
+	graphs, err := makeAllGraphs(numGraphs)
+	if err != nil {
+		app.serverError(
+			w,
+			r,
+			fmt.Errorf("makeAllGraphs(%d): %w", numGraphs, err),
+			http.StatusInternalServerError,
+		)
+
+		return
+	}
+
+	pageData := map[string]any{
+		"Graphs": graphs,
+	}
+
+	app.render(w, r, "all-graphs", pageData, http.StatusOK)
 }
