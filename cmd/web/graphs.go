@@ -85,30 +85,12 @@ func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
 		"RenderingTime": renderDuration,
 	}
 
-	app.render(w, r, "graphs", pageData, http.StatusOK)
-}
-
-func (app *Application) graphsRefresh(w http.ResponseWriter, r *http.Request) {
-	start := time.Now()
-	graphs, err := makeAllGraphs(numGraphs)
-	renderDuration := time.Since(start)
-
-	if err != nil {
-		app.serverError(
-			w,
-			r,
-			fmt.Errorf("makeAllGraphs(%d): %w", numGraphs, err),
-			http.StatusInternalServerError,
-		)
-
-		return
+	// We use the same handler for normal loads and htmx loads. Difference is
+	// what template we use on the rendering.
+	block := "graphs"
+	if r.Header.Get("Hx-Request") == "true" {
+		block = "all-graphs"
 	}
 
-	pageData := map[string]any{
-		"Graphs":        graphs,
-		"Servertime":    time.Now().String(),
-		"RenderingTime": renderDuration,
-	}
-
-	app.render(w, r, "all-graphs", pageData, http.StatusOK)
+	app.render(w, r, block, pageData, http.StatusOK)
 }

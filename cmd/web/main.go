@@ -38,7 +38,6 @@ func run() error {
 
 	// Echarts, and reloading.
 	mux.Get("/graphs", app.graphs)
-	mux.Get("/graphs/refresh", app.graphsRefresh)
 
 	mux.Get("/tabs", app.tabs)
 
