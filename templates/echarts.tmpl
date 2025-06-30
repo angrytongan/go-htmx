@@ -1,0 +1,27 @@
+{{block "echarts-page" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  {{template "echarts" .}}
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "echarts" .}}
+  <h2>echarts</h2>
+
+  <button hx-get="/echarts"
+          hx-target="next .all-echarts">Refresh</button>
+
+  <div class="all-echarts">
+    {{template "all-echarts" .}}
+  </div>
+{{end}}
+
+{{block "all-echarts" .}}
+  <p>Rendered: {{.Servertime}} (duration {{.RenderingTime}})</p>
+  {{range .Graphs}}
+    {{.Element}}
+    {{.Script}}
+  {{end}}
+{{end}}

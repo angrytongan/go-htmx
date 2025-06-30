@@ -13,6 +13,7 @@ import (
 )
 
 const (
+	// numGraphs is the number of graphs we render.
 	numGraphs = 3
 )
 
@@ -63,7 +64,10 @@ func makeAllGraphs(n int) ([]GraphThing, error) {
 	return graphs, nil
 }
 
-func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
+// TODO potentially rewrite this to not load up the graphs, but just use
+// hx-trigger=load in the template. Follow the htmx load pattern from the
+// template.
+func (app *Application) echarts(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 	graphs, err := makeAllGraphs(numGraphs)
 	renderDuration := time.Since(start)
@@ -87,9 +91,9 @@ func (app *Application) graphs(w http.ResponseWriter, r *http.Request) {
 
 	// We use the same handler for normal loads and htmx loads. Difference is
 	// what template we use on the rendering.
-	block := "graphs"
+	block := "echarts"
 	if r.Header.Get("Hx-Request") == "true" {
-		block = "all-graphs"
+		block = "all-echarts"
 	}
 
 	app.render(w, r, block, pageData, http.StatusOK)

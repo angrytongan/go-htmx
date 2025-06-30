@@ -37,7 +37,7 @@ func run() error {
 	mux.Get("/words/search/checkbox", app.wordsSearchCheckbox)
 
 	// Echarts, and reloading.
-	mux.Get("/graphs", app.graphs)
+	mux.Get("/echarts", app.echarts)
 
 	mux.Get("/tabs", app.tabs)
 
