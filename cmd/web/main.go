@@ -43,6 +43,10 @@ func run() error {
 	mux.Get("/tabs", app.tabs)
 	mux.Get("/tabs/{id}", app.tabs)
 
+	// SSE.
+	mux.Get("/events", app.events)
+	mux.Get("/events-server", app.eventsServer)
+
 	server := newServer(defaultPort, mux)
 
 	log.Printf("Listening on :%d\n", defaultPort)
