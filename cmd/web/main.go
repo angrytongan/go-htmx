@@ -39,7 +39,9 @@ func run() error {
 	// Echarts, and reloading.
 	mux.Get("/echarts", app.echarts)
 
+	// Tabs.
 	mux.Get("/tabs", app.tabs)
+	mux.Get("/tabs/{id}", app.tabs)
 
 	server := newServer(defaultPort, mux)
 
