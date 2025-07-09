@@ -1,0 +1,31 @@
+{{block "refresh-page" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  <button hx-get="/refresh/server-time"
+          hx-trigger="click"
+          hx-target="this"
+          hx-swap="outerHTML">Start polling</button>
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "refresh-server-time" .}}
+  <div hx-get="/refresh/server-time"
+       hx-trigger="every {{.Delay}}"
+       hx-target="this"
+       hx-swap="outerHTML">
+    <p>Server time is: {{.ServerTime}}</p>
+  </div>
+{{end}}
+
+{{block "refresh-server-time-paused" .}}
+  <div>
+    <p>Refreshes have been paused!
+      <button hx-get="/refresh/server-time"
+              hx-trigger="click"
+              hx-target="closest div"
+              hx-swap="outerHTML">Resume</button>
+    </p>
+  </div>
+{{end}}

@@ -47,6 +47,10 @@ func run() error {
 	mux.Get("/events", app.events)
 	mux.Get("/events-server", app.eventsServer)
 
+	// Playing with refresh.
+	mux.Get("/refresh", app.refresh)
+	mux.Get("/refresh/server-time", app.refreshServerTime)
+
 	server := newServer(defaultPort, mux)
 
 	log.Printf("Listening on :%d\n", defaultPort)
