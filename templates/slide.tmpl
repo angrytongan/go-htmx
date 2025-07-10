@@ -2,22 +2,28 @@
   {{template "head" .}}
   {{template "nav" .}}
 
-  <div hx-get="/slide/go"
-       hx-trigger="load"
-       hx-target="this"
-       hx-swap="outerHTML"></div>
+  {{template "slide" .}}
+
+  <button name="direction"
+          value="Prev"
+          hx-get="/slide/go"
+          hx-trigger="click"
+          hx-target="previous div"
+          hx-swap="outerHTML transition:true">Prev</button>
+  <button name="direction"
+          value="Next"
+          hx-get="/slide/go"
+          hx-trigger="click"
+          hx-target="previous div"
+          hx-swap="outerHTML transition:true">Next</button>
 
   {{template "foot" .}}
 {{end}}
 
 {{block "slide" .}}
-  <div class="slide-it">
+  <div class="slide-{{.Direction}}">
     {{range 5}}
       <p>this is page {{$.Page}}</p>
     {{end}}
-    <button hx-get="/slide/go"
-            hx-trigger="click"
-            hx-target="closest div"
-            hx-swap="outerHTML transition:true">Next</button>
   </div>
 {{end}}

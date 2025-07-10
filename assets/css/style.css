@@ -37,19 +37,28 @@ button.selected {
  from { transform: translateX(90px); }
 }
 
-@keyframes slide-to-left {
- to { transform: translateX(-90px); }
+@keyframes slide-from-left {
+ from { transform: translateX(-90px); }
 }
 
-.slide-it {
- view-transition-name: slide-it;
+.slide-Next {
+  view-transition-name: slide-Next;
 }
-
-::view-transition-old(slide-it) {
- animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
- 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+::view-transition-old(slide-Next) {
+ animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
 }
-::view-transition-new(slide-it) {
+::view-transition-new(slide-Next) {
  animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
  600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
+
+.slide-Prev {
+  view-transition-name: slide-Prev;
+}
+::view-transition-old(slide-Prev) {
+ animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
+}
+::view-transition-new(slide-Prev) {
+ animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+ 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-left;
 }
