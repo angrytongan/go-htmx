@@ -2,3 +2,21 @@ button.selected {
   background-color: black;
   color: white;
 }
+
+#colour-swap {
+  font-size: large;
+  border: 1px solid;
+  padding: 1em;
+}
+
+.red {
+  color: red;
+  border-color: red;
+  background-color: pink;
+}
+
+.green {
+  color: green;
+  border-color: green;
+  background-color: lightgreen;
+}

@@ -10,13 +10,17 @@ import (
 
 type Application struct {
 	tpl *template.Template
+
+	colourSwapValue string
 }
 
 func newApplication() *Application {
 	tpl := template.Must(template.ParseGlob("./templates/*.tmpl"))
+	colourSwapValue := "red"
 
 	return &Application{
-		tpl: tpl,
+		tpl:             tpl,
+		colourSwapValue: colourSwapValue,
 	}
 }
 

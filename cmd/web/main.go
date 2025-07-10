@@ -51,6 +51,10 @@ func run() error {
 	mux.Get("/refresh", app.refresh)
 	mux.Get("/refresh/server-time", app.refreshServerTime)
 
+	// Colour swap.
+	mux.Get("/colour-swap", app.colourSwap)
+	mux.Get("/colour-swap/go", app.colourSwapGo)
+
 	server := newServer(defaultPort, mux)
 
 	log.Printf("Listening on :%d\n", defaultPort)

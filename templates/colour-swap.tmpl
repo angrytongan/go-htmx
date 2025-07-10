@@ -1,0 +1,17 @@
+{{block "colour-swap-page" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  <div id="colour-swap">Click to swap colours</div>
+
+  <button hx-get="/colour-swap/go"
+          hx-trigger="click"
+          hx-target="#colour-swap"
+          hx-swap="outerHTML">swap</button>
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "color-swap" .}}
+  <div id="colour-swap" class="{{.Colour}}">this content should be {{.Colour}}</div>
+{{end}}
