@@ -20,3 +20,7 @@ button.selected {
   border-color: green;
   background-color: lightgreen;
 }
+
+.smooth {
+  transition: all 1s ease-in;
+}
