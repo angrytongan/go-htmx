@@ -11,13 +11,13 @@
 {{end}}
 
 {{block "slide" .}}
-  <div class="slide">
+  <div class="slide-it">
     {{range 5}}
       <p>this is page {{$.Page}}</p>
     {{end}}
     <button hx-get="/slide/go"
             hx-trigger="click"
             hx-target="closest div"
-            tx-swap="outerHTML">Next</button>
+            hx-swap="outerHTML transition:true">Next</button>
   </div>
 {{end}}
