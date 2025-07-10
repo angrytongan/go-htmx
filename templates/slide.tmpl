@@ -1,0 +1,23 @@
+{{block "slide-page" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  <div hx-get="/slide/go"
+       hx-trigger="load"
+       hx-target="this"
+       hx-swap="outerHTML"></div>
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "slide" .}}
+  <div class="slide">
+    {{range 5}}
+      <p>this is page {{$.Page}}</p>
+    {{end}}
+    <button hx-get="/slide/go"
+            hx-trigger="click"
+            hx-target="closest div"
+            tx-swap="outerHTML">Next</button>
+  </div>
+{{end}}

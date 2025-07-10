@@ -8,19 +8,24 @@ import (
 	"net/http"
 )
 
+const (
+	initialColour = "red"
+)
+
 type Application struct {
 	tpl *template.Template
 
 	colourSwapValue string
+	slidePage       string
 }
 
 func newApplication() *Application {
 	tpl := template.Must(template.ParseGlob("./templates/*.tmpl"))
-	colourSwapValue := "red"
 
 	return &Application{
 		tpl:             tpl,
-		colourSwapValue: colourSwapValue,
+		colourSwapValue: initialColour,
+		slidePage:       "",
 	}
 }
 

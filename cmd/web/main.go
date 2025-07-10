@@ -55,6 +55,10 @@ func run() error {
 	mux.Get("/colour-swap", app.colourSwap)
 	mux.Get("/colour-swap/go", app.colourSwapGo)
 
+	// Slide divs in / out.
+	mux.Get("/slide", app.slide)
+	mux.Get("/slide/go", app.slideGo)
+
 	server := newServer(defaultPort, mux)
 
 	log.Printf("Listening on :%d\n", defaultPort)
