@@ -59,6 +59,11 @@ func run() error {
 	mux.Get("/slide", app.slide)
 	mux.Get("/slide/go", app.slideGo)
 
+	// Leaflet.
+	mux.Get("/leaflet", app.leaflet)
+	mux.Get("/leaflet/markers-in-bbox", app.leafletMarkersInBBox)
+	mux.Post("/leaflet/choose-marker", app.leafletChooseMarker)
+
 	server := newServer(defaultPort, mux)
 
 	log.Printf("Listening on :%d\n", defaultPort)
