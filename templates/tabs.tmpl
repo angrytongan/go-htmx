@@ -11,7 +11,10 @@
   <div class="tab-container">
     <div class="tab-chooser" hx-target="closest .tab-container" hx-swap="outerHTML">
       {{range .Available -}}
-        <button hx-get="/tabs/{{.}}"{{if eq . $.ID}} class="selected"{{end}}>tab {{.}}</button>
+        <button {{if eq . $.ID}}class="selected"{{end}}
+                hx-get="/tabs/{{.}}"
+                hx-disabled-elt=".tab-chooser button"
+          >tab {{.}}</button>
       {{- end}}
     </div>
 

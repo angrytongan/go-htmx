@@ -6,16 +6,22 @@
 
   <button name="direction"
           value="Prev"
+          class="slider-button"
           hx-get="/slide/go"
           hx-trigger="click"
           hx-target="previous div"
-          hx-swap="outerHTML transition:true">Prev</button>
+          hx-swap="outerHTML transition:true"
+          hx-disabled-elt=".slider-button"
+          >Prev</button>
   <button name="direction"
           value="Next"
+          class="slider-button"
           hx-get="/slide/go"
           hx-trigger="click"
           hx-target="previous div"
-          hx-swap="outerHTML transition:true">Next</button>
+          hx-swap="outerHTML transition:true"
+          hx-disabled-elt=".slider-button"
+          >Next</button>
 
   {{template "foot" .}}
 {{end}}
