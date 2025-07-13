@@ -19,31 +19,31 @@ type Marker struct {
 var (
 	townMarkers = []Marker{
 		{
-			ID:        0,
+			ID:        1,
 			Title:     "Mooloolah Valley",
 			Latitude:  -26.765767,
 			Longitude: 152.963076,
 		},
 		{
-			ID:        1,
+			ID:        2,
 			Title:     "Landsborough",
 			Latitude:  -26.811662,
 			Longitude: 152.965565,
 		},
 		{
-			ID:        2,
+			ID:        3,
 			Title:     "Maroochydore",
 			Latitude:  -26.655935,
 			Longitude: 153.094954,
 		},
 		{
-			ID:        3,
+			ID:        4,
 			Title:     "Coolum",
 			Latitude:  -26.528951,
 			Longitude: 153.091736,
 		},
 		{
-			ID:        4,
+			ID:        5,
 			Title:     "Caloundra",
 			Latitude:  -26.798294,
 			Longitude: 153.142333,
@@ -78,17 +78,13 @@ func (app *Application) leafletMarkersInBBox(w http.ResponseWriter, r *http.Requ
 		}
 	}
 
-	fmt.Println(markers)
-
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(markers)
 }
 
-func (app *Application) leafletChooseMarker(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	id := r.FormValue("id")
-
+func (app *Application) leafletMarkerPopup(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
 	markerID, err := strconv.Atoi(id)
 	if err != nil {
 		app.serverError(w, r, fmt.Errorf("strconv.Atoi(%s): %w", id, err), http.StatusInternalServerError)
@@ -105,9 +101,58 @@ func (app *Application) leafletChooseMarker(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
+	marker := townMarkers[idx]
+
 	pageData := map[string]any{
-		"Chosen": townMarkers[idx],
+		"Popup": marker,
 	}
 
-	app.render(w, r, "leaflet-chosen-marker", pageData, http.StatusOK)
+	block := "leaflet-marker-choose"
+	if app.leafletChosenMarker == marker.ID {
+		block = "leaflet-marker-unchoose"
+	}
+
+	app.render(w, r, block, pageData, http.StatusOK)
+}
+
+func (app *Application) leafletMarkerChoose(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		app.serverError(w, r, fmt.Errorf("r.ParseForm(): %w", err), http.StatusInternalServerError)
+
+		return
+	}
+
+	id := r.FormValue("id")
+	markerID, err := strconv.Atoi(id)
+	if err != nil {
+		app.serverError(w, r, fmt.Errorf("strconv.Atoi(%s): %w", id, err), http.StatusInternalServerError)
+
+		return
+	}
+
+	block := "leaflet-marker-choose"
+	if app.leafletChosenMarker == markerID {
+		app.leafletChosenMarker = 0
+	} else {
+		app.leafletChosenMarker = markerID
+		block = "leaflet-marker-unchoose"
+	}
+
+	idx := slices.IndexFunc(townMarkers, func(m Marker) bool {
+		return m.ID == markerID
+	})
+	if idx == -1 {
+		app.serverError(w, r, fmt.Errorf("slices.IndexFunc(%s): %w", id, err), http.StatusBadRequest)
+
+		return
+	}
+
+	marker := townMarkers[idx]
+
+	pageData := map[string]any{
+		"Popup": marker,
+	}
+
+	app.render(w, r, block, pageData, http.StatusOK)
 }

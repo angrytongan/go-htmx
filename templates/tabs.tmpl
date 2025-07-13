@@ -1,4 +1,4 @@
-{{block "tabs-page" .}}
+{{block "tabs" .}}
   {{template "head" .}}
   {{template "nav" .}}
 
@@ -7,7 +7,7 @@
   {{template "foot" .}}
 {{end}}
 
-{{block "tabs" .}}
+{{block "tabs-content" .}}
   <div class="tab-container">
     <div class="tab-chooser" hx-target="closest .tab-container" hx-swap="outerHTML">
       {{range .Available -}}

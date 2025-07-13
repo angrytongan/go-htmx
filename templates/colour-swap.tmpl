@@ -1,4 +1,4 @@
-{{block "colour-swap-page" .}}
+{{block "colour-swap" .}}
   {{template "head" .}}
   {{template "nav" .}}
 
@@ -12,6 +12,6 @@
   {{template "foot" .}}
 {{end}}
 
-{{block "color-swap" .}}
+{{block "color-swap-go" .}}
   <div id="colour-swap" class="smooth {{.Colour}}">this content should be {{.Colour}}</div>
 {{end}}

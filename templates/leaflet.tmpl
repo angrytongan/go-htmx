@@ -1,15 +1,14 @@
-{{block "leaflet-page" .}}
+{{block "leaflet" .}}
   {{template "head" .}}
   {{template "nav" .}}
 
-  {{template "leaflet" .}}
+  {{template "leaflet-content" .}}
 
   {{template "foot" .}}
 {{end}}
 
-{{block "leaflet" .}}
+{{block "leaflet-content" .}}
   <div id="map" class="map"></div>
-
   <div id="chosen-marker"></div>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -21,7 +20,7 @@
 
   <script>
     const DEBOUNCE_GETMARKERS_TIMEOUT = 500; // ms
-    const mapMarkers = new Set();
+    const mapMarkers = new Map();
 
     const debounce = (mainFunction, delay) => {
       let timer;
@@ -43,24 +42,25 @@
           .then((markers) => {
             markers.forEach((m) => {
               if (!mapMarkers.has(m.id)) {
-                mapMarkers.add(m.id);
-                const newMarker = L.marker([m.latitude, m.longitude]);
-                newMarker.bindPopup(`
-                  <button hx-post="/leaflet/choose-marker"
-                          hx-vars="id:${m.id}"
-                          hx-trigger="click"
-                          hx-target="#chosen-marker"
-                          hx-swap="innerHTML"
-                     >Choose ${m.title}</button>
-                `);
-                newMarker.on('popupopen', function () {
-                  const e = this.getPopup().getElement()
-                  htmx.process(e)
+                const newMarker = L.marker([m.latitude, m.longitude]).addTo(map);
+
+                mapMarkers.set(m.id, newMarker)
+                newMarker.bindPopup('Loading');
+
+                newMarker.on('click', (e) => {
+                  newMarker.openPopup();
+
+                  htmx.ajax('GET', `/leaflet/marker-popup/${m.id}`, {
+                    handler: (e, r) => {
+                      const content = r.xhr.responseText;
+                      newMarker.setPopupContent(content)
+                      htmx.process(newMarker.getPopup().getElement())
+                    },
+                  });
                 });
-                newMarker.addTo(map);
               }
-            })
           })
+        })
       }
     };
 
@@ -82,6 +82,26 @@
 
 {{end}}
 
-{{block "leaflet-chosen-marker" .}}
-  <p>You chose {{.Chosen.Title}}!</p>
+{{block "leaflet-marker-choose" .}}
+  <div>
+    <p>This is {{.Popup.Title}}</p>
+    <button hx-post="/leaflet/marker-choose"
+            hx-vars="id:{{.Popup.ID}}"
+            hx-trigger="click"
+            hx-target="closest div"
+            hx-swap="outerHTML"
+            >Choose</button>
+  </div>
+{{end}}
+
+{{block "leaflet-marker-unchoose" .}}
+  <div>
+    <p>This is {{.Popup.Title}}</p>
+    <button hx-post="/leaflet/marker-choose"
+            hx-vars="id:{{.Popup.ID}}"
+            hx-trigger="click"
+            hx-target="closest div"
+            hx-swap="outerHTML"
+            >Unchoose</button>
+  </div>
 {{end}}

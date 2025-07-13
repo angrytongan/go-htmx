@@ -17,5 +17,5 @@ func (app *Application) colourSwapGo(w http.ResponseWriter, r *http.Request) {
 		"Colour": app.colourSwapValue,
 	}
 
-	app.render(w, r, "color-swap", pageData, http.StatusOK)
+	app.render(w, r, "color-swap-go", pageData, http.StatusOK)
 }

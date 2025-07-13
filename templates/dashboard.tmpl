@@ -1,13 +1,13 @@
-{{block "dashboard-page" .}}
+{{block "dashboard" .}}
   {{template "head" .}}
   {{template "nav" .}}
 
-  {{template "dashboard" .}}
+  {{template "dashboard-content" .}}
 
   {{template "foot" .}}
 {{end}}
 
-{{block "dashboard" .}}
+{{block "dashboard-content" .}}
   <h2>Dashboard</h2>
   {{template "news" .News}}
   {{template "weather" .Weather}}

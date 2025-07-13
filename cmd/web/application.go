@@ -17,6 +17,8 @@ type Application struct {
 
 	colourSwapValue string
 	slidePage       string
+
+	leafletChosenMarker int
 }
 
 func newApplication() *Application {
@@ -46,10 +48,6 @@ func (app *Application) render(w http.ResponseWriter,
 	statusCode int,
 ) {
 	var b bytes.Buffer
-
-	if r.Header.Get("Hx-Request") == "" {
-		block += "-page"
-	}
 
 	err := app.tpl.ExecuteTemplate(&b, block, pageData)
 	if err != nil {

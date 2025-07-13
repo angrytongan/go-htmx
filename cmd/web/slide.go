@@ -74,5 +74,5 @@ func (app *Application) slideGo(w http.ResponseWriter, r *http.Request) {
 		"Direction": direction,
 	}
 
-	app.render(w, r, "slide", pageData, http.StatusOK)
+	app.render(w, r, "slide-content", pageData, http.StatusOK)
 }

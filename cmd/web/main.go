@@ -62,7 +62,8 @@ func run() error {
 	// Leaflet.
 	mux.Get("/leaflet", app.leaflet)
 	mux.Get("/leaflet/markers-in-bbox", app.leafletMarkersInBBox)
-	mux.Post("/leaflet/choose-marker", app.leafletChooseMarker)
+	mux.Get("/leaflet/marker-popup/{id}", app.leafletMarkerPopup)
+	mux.Post("/leaflet/marker-choose", app.leafletMarkerChoose)
 
 	server := newServer(defaultPort, mux)
 

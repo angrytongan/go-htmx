@@ -1,13 +1,13 @@
-{{block "echarts-page" .}}
+{{block "echarts" .}}
   {{template "head" .}}
   {{template "nav" .}}
 
-  {{template "echarts" .}}
+  {{template "echarts-content" .}}
 
   {{template "foot" .}}
 {{end}}
 
-{{block "echarts" .}}
+{{block "echarts-content" .}}
   <h2>echarts</h2>
 
   <button hx-get="/echarts"

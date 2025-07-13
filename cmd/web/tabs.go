@@ -25,5 +25,5 @@ func (app *Application) tabs(w http.ResponseWriter, r *http.Request) {
 		"Content":   content[id],
 	}
 
-	app.render(w, r, "tabs", pageData, http.StatusOK)
+	app.render(w, r, "tabs-content", pageData, http.StatusOK)
 }
