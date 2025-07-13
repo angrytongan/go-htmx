@@ -107,7 +107,7 @@ func (app *Application) leafletMarkerPopup(w http.ResponseWriter, r *http.Reques
 	marker := townMarkers[idx]
 
 	pageData := map[string]any{
-		"Popup": marker,
+		"Marker": marker,
 	}
 
 	block := "leaflet-marker-choose"
@@ -154,7 +154,7 @@ func (app *Application) leafletMarkerChoose(w http.ResponseWriter, r *http.Reque
 	marker := townMarkers[idx]
 
 	pageData := map[string]any{
-		"Popup": marker,
+		"Marker": marker,
 	}
 
 	app.render(w, r, block, pageData, http.StatusOK)
