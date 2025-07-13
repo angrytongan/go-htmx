@@ -48,7 +48,7 @@
                 newMarker.bindPopup('Loading');
 
                 newMarker.on('click', (e) => {
-                  newMarker.openPopup();
+                  newMarker.setPopupContent('Loading...').openPopup();
 
                   htmx.ajax('GET', `/leaflet/marker-popup/${m.id}`, {
                     handler: (e, r) => {
@@ -73,7 +73,7 @@
       map.on(event, (e) => debouncedGetMarkers(map.getBounds()));
     });
 
-    map.setView([-26.65, 153.06], 13);
+    map.setView([-26.65, 153.06], 10);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

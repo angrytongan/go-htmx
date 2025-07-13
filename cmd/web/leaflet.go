@@ -7,6 +7,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Marker struct {
@@ -84,6 +85,8 @@ func (app *Application) leafletMarkersInBBox(w http.ResponseWriter, r *http.Requ
 }
 
 func (app *Application) leafletMarkerPopup(w http.ResponseWriter, r *http.Request) {
+	time.Sleep(250 * time.Millisecond)
+
 	id := r.PathValue("id")
 	markerID, err := strconv.Atoi(id)
 	if err != nil {
