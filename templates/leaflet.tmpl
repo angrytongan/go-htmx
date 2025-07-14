@@ -45,12 +45,19 @@
                 const marker = L.marker([m.latitude, m.longitude]).addTo(map);
 
                 mapMarkers.set(m.id, marker)
+                marker.bindPopup('initialised', {
+                  maxWidth: 'auto',
+                });
 
-                marker.on('click', (e) => {
-                  htmx.ajax('GET', `/leaflet/marker-popup/${m.id}`, {
-                    target: '#marker-information',
-                    swap: 'innerHTML',
-                  });
+                marker.on('click', async (e) => {
+                  marker.setPopupContent(`
+                    <div hx-get="/leaflet/marker-popup/${m.id}"
+                         hx-target="this"
+                         hx-trigger="load"
+                         hx-swap="outerHTML"
+                         hx-select-oob="marker-information">loading...</div>
+                  `).openPopup();
+                  htmx.process(marker.getPopup().getElement())
                 });
               }
           })
@@ -76,9 +83,10 @@
 
 {{end}}
 
+{{/* TODO separate this into a template that has the words, and another that toggles the button */}}
 {{block "leaflet-marker-choose" .}}
   <div>
-    <p>This is {{.Marker.Title}}</p>
+    <p>This is {{.Marker.Title}}, with some more words that are long</p>
     <button hx-post="/leaflet/marker-choose"
             hx-vars="id:{{.Marker.ID}}"
             hx-trigger="click"
@@ -86,6 +94,7 @@
             hx-swap="outerHTML"
             >Choose</button>
   </div>
+  <div id="marker-information">this is information for {{.Marker.Title}}</div>
 {{end}}
 
 {{block "leaflet-marker-unchoose" .}}
@@ -98,4 +107,5 @@
             hx-swap="outerHTML"
             >Unchoose</button>
   </div>
+  <div id="marker-information">this is information for {{.Marker.Title}}</div>
 {{end}}
