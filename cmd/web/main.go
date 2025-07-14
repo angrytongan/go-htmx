@@ -65,6 +65,10 @@ func run() error {
 	mux.Get("/leaflet/marker-popup/{id}", app.leafletMarkerPopup)
 	mux.Post("/leaflet/marker-choose", app.leafletMarkerChoose)
 
+	// Confirm dialog.
+	mux.Get("/confirm", app.confirm)
+	mux.Get("/confirm/do-something", app.confirmDoSomething)
+
 	server := newServer(defaultPort, mux)
 
 	log.Printf("Listening on :%d\n", defaultPort)

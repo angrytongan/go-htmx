@@ -1,0 +1,18 @@
+{{block "confirm" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  <button hx-get="/confirm/do-something"
+          hx-target="next div"
+          hx-swap="innerHTML"
+          hx-confirm="You sure?"
+          >do it</button>
+
+  <div>result goes here</div>
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "confirm-do-something" .}}
+  <p>I got a {{.Number}}</p>
+{{end}}
