@@ -83,29 +83,21 @@
 
 {{end}}
 
-{{/* TODO separate this into a template that has the words, and another that toggles the button */}}
-{{block "leaflet-marker-choose" .}}
-  <div>
-    <p>This is {{.Marker.Title}}, with some more words that are long</p>
-    <button hx-post="/leaflet/marker-choose"
-            hx-vars="id:{{.Marker.ID}}"
-            hx-trigger="click"
-            hx-target="closest div"
-            hx-swap="outerHTML"
-            >Choose</button>
-  </div>
-  <div id="marker-information">this is information for {{.Marker.Title}}</div>
+{{block "leaflet-marker-popup" .}}
+  {{template "leaflet-marker-info" .}}
+  {{template "leaflet-marker-controls" .}}
 {{end}}
 
-{{block "leaflet-marker-unchoose" .}}
-  <div>
-    <p>This is {{.Marker.Title}}</p>
-    <button hx-post="/leaflet/marker-choose"
-            hx-vars="id:{{.Marker.ID}}"
-            hx-trigger="click"
-            hx-target="closest div"
-            hx-swap="outerHTML"
-            >Unchoose</button>
-  </div>
-  <div id="marker-information">this is information for {{.Marker.Title}}</div>
+{{block "leaflet-marker-info" .}}
+  <p>This is {{.Marker.Title}}, with some more words that are long</p>
+{{end}}
+
+{{block "leaflet-marker-controls" .}}
+  <button hx-post="/leaflet/marker-choose"
+          hx-vars="id:{{.Marker.ID}}"
+          hx-trigger="click"
+          hx-target="this"
+          hx-swap="outerHTML"
+          >{{.Prompt}}</button>
+  <div id="marker-information" hx-swap-oob="true">{{.Information}}</div>
 {{end}}

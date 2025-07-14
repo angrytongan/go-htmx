@@ -106,16 +106,19 @@ func (app *Application) leafletMarkerPopup(w http.ResponseWriter, r *http.Reques
 
 	marker := townMarkers[idx]
 
+	information := "Information about " + marker.Title
+	prompt := "choose"
+	if app.leafletChosenMarker == markerID {
+		prompt = "unchoose"
+	}
+
 	pageData := map[string]any{
-		"Marker": marker,
+		"Marker":      marker,
+		"Prompt":      prompt,
+		"Information": information,
 	}
 
-	block := "leaflet-marker-choose"
-	if app.leafletChosenMarker == marker.ID {
-		block = "leaflet-marker-unchoose"
-	}
-
-	app.render(w, r, block, pageData, http.StatusOK)
+	app.render(w, r, "leaflet-marker-popup", pageData, http.StatusOK)
 }
 
 func (app *Application) leafletMarkerChoose(w http.ResponseWriter, r *http.Request) {
@@ -134,14 +137,6 @@ func (app *Application) leafletMarkerChoose(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	block := "leaflet-marker-choose"
-	if app.leafletChosenMarker == markerID {
-		app.leafletChosenMarker = 0
-	} else {
-		app.leafletChosenMarker = markerID
-		block = "leaflet-marker-unchoose"
-	}
-
 	idx := slices.IndexFunc(townMarkers, func(m Marker) bool {
 		return m.ID == markerID
 	})
@@ -153,9 +148,22 @@ func (app *Application) leafletMarkerChoose(w http.ResponseWriter, r *http.Reque
 
 	marker := townMarkers[idx]
 
-	pageData := map[string]any{
-		"Marker": marker,
+	prompt := "choose"
+	information := "You chose " + marker.Title
+
+	if app.leafletChosenMarker == markerID {
+		app.leafletChosenMarker = 0
+		information = "You unchose " + marker.Title
+	} else {
+		app.leafletChosenMarker = markerID
+		prompt = "unchoose"
 	}
 
-	app.render(w, r, block, pageData, http.StatusOK)
+	pageData := map[string]any{
+		"Marker":      marker,
+		"Prompt":      prompt,
+		"Information": information,
+	}
+
+	app.render(w, r, "leaflet-marker-controls", pageData, http.StatusOK)
 }
