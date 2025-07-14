@@ -71,3 +71,12 @@ button.selected[disabled] {
   height: 300px;
   margin-top: 1em;
 }
+
+body {
+  display: grid;
+  grid-template-columns: 10em 3fr;
+}
+
+#nav {
+  margin-right: 1em;
+}

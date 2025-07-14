@@ -8,13 +8,15 @@
 {{end}}
 
 {{block "echarts-content" .}}
-  <h2>echarts</h2>
+  <div>
+    <h2>echarts</h2>
 
-  <button hx-get="/echarts"
-          hx-target="next .all-echarts">Refresh</button>
+    <button hx-get="/echarts"
+            hx-target="next .all-echarts">Refresh</button>
 
-  <div class="all-echarts">
-    {{template "all-echarts" .}}
+    <div class="all-echarts">
+      {{template "all-echarts" .}}
+    </div>
   </div>
 {{end}}
 

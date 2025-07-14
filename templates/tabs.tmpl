@@ -2,7 +2,10 @@
   {{template "head" .}}
   {{template "nav" .}}
 
-  <div hx-get="/tabs/1" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+  <div>
+    <h2>Tabs</h2>
+    <div hx-get="/tabs/1" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+  </div>
 
   {{template "foot" .}}
 {{end}}

@@ -2,12 +2,15 @@
   {{template "head" .}}
   {{template "nav" .}}
 
-  <div hx-ext="sse" sse-connect="/events-server">
-    <div sse-swap="Event1">
-      This will be the server time, at 1 second intervals.
-    </div>
-    <div sse-swap="Event2">
-      This will be the server time, at 2 second intervals.
+  <div>
+    <h2>SSE events</h2>
+    <div hx-ext="sse" sse-connect="/events-server">
+      <div sse-swap="Event1">
+        This will be the server time, at 1 second intervals.
+      </div>
+      <div sse-swap="Event2">
+        This will be the server time, at 2 second intervals.
+      </div>
     </div>
   </div>
 

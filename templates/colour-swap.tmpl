@@ -2,12 +2,16 @@
   {{template "head" .}}
   {{template "nav" .}}
 
-  <div id="colour-swap">Click to swap colours</div>
+  <div>
+    <h2>Colour swap</h2>
 
-  <button hx-get="/colour-swap/go"
-          hx-trigger="click"
-          hx-target="#colour-swap"
-          hx-swap="outerHTML">swap</button>
+    <div id="colour-swap">Click to swap colours</div>
+
+    <button hx-get="/colour-swap/go"
+            hx-trigger="click"
+            hx-target="#colour-swap"
+            hx-swap="outerHTML">swap</button>
+  </div>
 
   {{template "foot" .}}
 {{end}}

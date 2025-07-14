@@ -8,9 +8,11 @@
 {{end}}
 
 {{block "dashboard-content" .}}
-  <h2>Dashboard</h2>
-  {{template "news" .News}}
-  {{template "weather" .Weather}}
+  <div>
+    <h2>Dashboard</h2>
+    {{template "news" .News}}
+    {{template "weather" .Weather}}
+  </div>
 {{end}}
 
 {{block "news" .}}

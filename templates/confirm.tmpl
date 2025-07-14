@@ -2,13 +2,17 @@
   {{template "head" .}}
   {{template "nav" .}}
 
-  <button hx-get="/confirm/do-something"
-          hx-target="next div"
-          hx-swap="innerHTML"
-          hx-confirm="You sure?"
-          >do it</button>
+  <div>
+    <h2>Confirm dialog</h2>
 
-  <div>result goes here</div>
+    <button hx-get="/confirm/do-something"
+            hx-target="next div"
+            hx-swap="innerHTML"
+            hx-confirm="You sure?"
+            >do it</button>
+
+    <div>result goes here</div>
+  </div>
 
   {{template "foot" .}}
 {{end}}

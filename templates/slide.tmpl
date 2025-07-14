@@ -2,26 +2,30 @@
   {{template "head" .}}
   {{template "nav" .}}
 
-  {{template "slide-content" .}}
+  <div>
+    <h2>Slide transition</h2>
 
-  <button name="direction"
-          value="Prev"
-          class="slider-button"
-          hx-get="/slide/go"
-          hx-trigger="click"
-          hx-target="previous div"
-          hx-swap="outerHTML transition:true"
-          hx-disabled-elt=".slider-button"
-          >Prev</button>
-  <button name="direction"
-          value="Next"
-          class="slider-button"
-          hx-get="/slide/go"
-          hx-trigger="click"
-          hx-target="previous div"
-          hx-swap="outerHTML transition:true"
-          hx-disabled-elt=".slider-button"
-          >Next</button>
+    {{template "slide-content" .}}
+
+    <button name="direction"
+            value="Prev"
+            class="slider-button"
+            hx-get="/slide/go"
+            hx-trigger="click"
+            hx-target="previous div"
+            hx-swap="outerHTML transition:true"
+            hx-disabled-elt=".slider-button"
+            >Prev</button>
+    <button name="direction"
+            value="Next"
+            class="slider-button"
+            hx-get="/slide/go"
+            hx-trigger="click"
+            hx-target="previous div"
+            hx-swap="outerHTML transition:true"
+            hx-disabled-elt=".slider-button"
+            >Next</button>
+  </div>
 
   {{template "foot" .}}
 {{end}}

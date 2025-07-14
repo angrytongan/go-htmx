@@ -2,10 +2,14 @@
   {{template "head" .}}
   {{template "nav" .}}
 
-  <button hx-get="/refresh/server-time"
-          hx-trigger="click"
-          hx-target="this"
-          hx-swap="outerHTML">Start polling</button>
+  <div>
+    <h2>Refresh</h2>
+
+    <button hx-get="/refresh/server-time"
+            hx-trigger="click"
+            hx-target="this"
+            hx-swap="outerHTML">Start polling</button>
+  </div>
 
   {{template "foot" .}}
 {{end}}
