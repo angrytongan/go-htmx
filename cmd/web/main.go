@@ -69,6 +69,10 @@ func run() error {
 	mux.Get("/confirm", app.confirm)
 	mux.Get("/confirm/do-something", app.confirmDoSomething)
 
+	// disabled-elt.
+	mux.Get("/disabled-elt", app.disabledElt)
+	mux.Get("/disabled-elt/req", app.disabledEltReq)
+
 	server := newServer(defaultPort, mux)
 
 	log.Printf("Listening on :%d\n", defaultPort)

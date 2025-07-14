@@ -1,0 +1,25 @@
+{{block "disabled-elt" .}}
+  {{template "head" .}}
+  {{template "nav" .}}
+
+  <div>
+    <h2>Disabled elt</h2>
+
+    <p id="loading-indicator" class="htmx-indicator">Loading</p>
+
+    <button hx-get="/disabled-elt/req"
+            hx-target="next p"
+            hx-swap="innerHTML"
+            hx-disabled-elt="this"
+            hx-indicator="#loading-indicator"
+            >do it</button>
+
+    <p>Result goes here</p>
+  </div>
+
+  {{template "foot" .}}
+{{end}}
+
+{{block "disabled-elt-result" .}}
+  Server time is {{.ServerTime}}
+{{end}}
